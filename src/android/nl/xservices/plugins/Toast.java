@@ -25,20 +25,19 @@ public class Toast extends CordovaPlugin {
   @Override
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     if (ACTION_SHOW_EVENT.equals(action)) {
-    if(webView)
-    {
-      if (webView.isPaused()) {
+   
+      if (CordovaWebView.isPaused()) {
         // suppress while paused
         return true;
       }
-    }
+    
       final String message = args.getString(0);
       final String duration = args.getString(1);
       final String position = args.getString(2);
 
       cordova.getActivity().runOnUiThread(new Runnable() {
         public void run() {
-          android.widget.Toast toast = android.widget.Toast.makeText(webView.getContext(), message, 0);
+          android.widget.Toast toast = android.widget.Toast.makeText(CordovaWebView.getContext(), message, 0);
 
           if ("top".equals(position)) {
             toast.setGravity(Gravity.TOP|Gravity.CENTER_HORIZONTAL, 0, 20);
